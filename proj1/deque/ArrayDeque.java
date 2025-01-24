@@ -13,13 +13,13 @@ public class ArrayDeque<T> {
 
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        System.arraycopy(items, first, a, first + capacity / 2, size);
-        first += capacity / 2;
+        System.arraycopy(items, first, a, first + capacity / 4, size);
+        first += capacity / 4;
         items = a;
     }
 
     public void addLast(T adder) {
-        if (size == items.length) {
+        if (size + first >= items.length) {
             resize(items.length * 2);
         }
         items[size + first] = adder;
@@ -44,7 +44,7 @@ public class ArrayDeque<T> {
             return null;
         }
         T r = items[size - 1];
-        items[size - 1] = null;
+        items[first + size - 1] = null;
         size -= 1;
         return r;
     }
@@ -84,13 +84,28 @@ public class ArrayDeque<T> {
 
     public static void main(String[] args) {
         ArrayDeque<Integer> test = new ArrayDeque<>();
-        test.addLast(10);
-        test.addFirst(11);
-        test.printDeque();
-        test.removeFirst();
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
-        System.out.print(test.isEmpty());
+        // 测试 addFirst 和 removeFirst
+        for (int i = 0; i < 10; i++) {
+            test.addFirst(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            System.out.println(test.removeFirst());
+        }
+
+        // 测试 addLast 和 removeLast
+        for (int i = 0; i < 10; i++) {
+            test.addLast(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            System.out.println(test.removeLast());
+        }
+
+        // 测试 resize
+        for (int i = 0; i < 100; i++) {
+            test.addLast(i);
+        }
+        for (int i = 0; i < 100; i++) {
+            System.out.println(test.removeFirst());
+        }
     }
 }
