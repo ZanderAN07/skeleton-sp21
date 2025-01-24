@@ -72,8 +72,8 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        for (int i = first; i < size; i++) {
-            System.out.print(items[i]);
+        for (int i = first; i < size + first; i++) {
+            System.out.print(items[i]+" ");
         }
         System.out.println();
     }
@@ -86,6 +86,11 @@ public class ArrayDeque<T> {
         ArrayDeque<Integer> test = new ArrayDeque<>();
         test.addLast(10);
         test.addFirst(11);
-        System.out.println(test.get(0));
+        test.printDeque();
+        test.removeFirst();
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
+        System.out.print(test.isEmpty());
     }
 }
