@@ -1,6 +1,6 @@
 package deque;
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
     private T[] items;
     private int size;
     private int first; //（数组的第一个数字的index）
@@ -77,9 +77,6 @@ public class ArrayDeque<T> {
         System.out.println();
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
 
     public static void main(String[] args) {
         testBasicOperations();

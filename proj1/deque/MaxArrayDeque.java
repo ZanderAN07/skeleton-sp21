@@ -1,8 +1,25 @@
 package deque;
 
+import java.util.Comparator;
+
 public class MaxArrayDeque<T> extends ArrayDeque<T> {
     Comparator<T> comparator;
 
+    public static class IntComparator implements Comparator<Integer>{
+        public int compare(Integer s1, Integer s2){
+            return s1 - s2;
+        }
+    }
+    public class StringComparator implements Comparator<String>{
+        public int compare(String s1, String s2){
+            return s1.compareTo(s2);
+        }
+    }
+    public class FloatComparator implements Comparator<Float>{
+        public int compare(Float f1, Float f2){
+            return (int)(f1- f2);
+        }
+    }
     public MaxArrayDeque(Comparator<T> c) {
         super();
         comparator = c;
@@ -22,7 +39,7 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         return maximum;
     }
 
-    public T max(comparator c) {
+    public T max(Comparator c) {
         if (isEmpty()) {
             return null;
         }

@@ -1,6 +1,6 @@
 package deque;
 
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T>{
     private class TNode {
         public TNode prev;
         public T item;
@@ -39,9 +39,7 @@ public class LinkedListDeque<T> {
     public int size(){
         return size;
     }
-    public boolean isEmpty(){
-        return size == 0;
-    }
+
     public T removeFirst(){
         if(sentinel == null){
             return null;
