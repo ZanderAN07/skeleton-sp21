@@ -86,5 +86,12 @@ public class LinkedListDeque<T> implements Deque<T>{
             p = p.next;
         }
     }
+    public T get(int index){
+        TNode current = sentinel.next;//此行显示current never used
+        for (int i = 0; i < index; i++) {
+            current = current.next;//此行无法识别current
+        }
+        return current.item;
+    }
 
 }
