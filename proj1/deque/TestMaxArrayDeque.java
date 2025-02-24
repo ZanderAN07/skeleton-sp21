@@ -3,6 +3,7 @@ package deque;
 import org.junit.Test;
 
 import java.util.Comparator;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,6 +18,6 @@ public class TestMaxArrayDeque {
         deque.addLast(5);
 
         Integer max = deque.max();
-        assertEquals(5, max);
+        assertEquals(Optional.of(5), max);
     }
 }
