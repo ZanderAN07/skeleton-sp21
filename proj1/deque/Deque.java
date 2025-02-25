@@ -4,11 +4,11 @@ public interface Deque<T> {
     default boolean isEmpty(){
         return this.size()== 0;
     }
-    public void addFirst(T item);
-    public void addLast(T item);
-    public int size();
-    public void printDeque();
-    public T removeFirst();
-    public T removeLast();
-    public T get(int index);
+    void addFirst(T item);
+    void addLast(T item);
+    int size();
+    void printDeque();
+    T removeFirst();
+    T removeLast();
+    T get(int index);
 }

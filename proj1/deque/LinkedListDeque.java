@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Deque<T>{
     private class TNode {
-        public TNode prev;
-        public T item;
-        public TNode next;
+        private TNode prev;
+        private T item;
+        private TNode next;
 
         public TNode(T i, TNode n, TNode p) {
             item = i;
@@ -101,11 +101,6 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
     private T getRecursiveHelper(int index, TNode current) {
-        // 如果当前节点为空，说明 index 超出了链表范围
-        if (current == null) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
-
         // 如果已经到达目标节点，返回该节点的 item
         if (index == 0) {
             return current.item;
@@ -130,7 +125,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     public Iterator<T> iterator(){
         return new LinkedListDequeIterator();
     }
-    
+
     public boolean equals(Object o){
         if(o instanceof Deque){
             int s = size;

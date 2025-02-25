@@ -1,6 +1,4 @@
 package deque;
-
-import javax.swing.text.html.HTMLDocument;
 import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T> {

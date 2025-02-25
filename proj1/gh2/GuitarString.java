@@ -1,8 +1,6 @@
 package gh2;
 
 
-import deque.Deque;
-
 
 import deque.ArrayDeque;
 
@@ -44,7 +42,7 @@ public class GuitarString {
     public void tic() {
         double factor1 = buffer.get(0);
         double factor2 = buffer.get(1);
-        double adder = 0.996*0.5*(factor1 + factor2);
+        double adder = 0.996 * 0.5 * (factor1 + factor2);
         buffer.removeFirst();
         buffer.addLast(adder);
     }
