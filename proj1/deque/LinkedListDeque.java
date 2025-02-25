@@ -114,6 +114,7 @@ public class LinkedListDeque<T> implements Deque<T>{
             return getRecursiveHelper(index - 1, current.next);
         }
     }
+
     private class LinkedListDequeIterator implements Iterator{
         private int index = 0;
         @Override
@@ -125,9 +126,11 @@ public class LinkedListDeque<T> implements Deque<T>{
             return index < size;
         }
     }
+
     public Iterator<T> iterator(){
         return new LinkedListDequeIterator();
     }
+    
     public boolean equals(Object o){
         if(o instanceof Deque){
             int s = size;
