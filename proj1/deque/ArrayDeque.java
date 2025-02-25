@@ -1,5 +1,8 @@
 package deque;
 
+import javax.swing.text.html.HTMLDocument;
+import java.util.Iterator;
+
 public class ArrayDeque<T> implements Deque<T>{
     private T[] items;
     private int size;
@@ -75,6 +78,34 @@ public class ArrayDeque<T> implements Deque<T>{
             System.out.print(items[i] + " ");
         }
         System.out.println();
+    }
+    public class ArrayDequeIterator implements Iterator {
+        private int index = 0;
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+        @Override
+        public T next(){
+            return get(index);
+        }
+    }
+    public Iterator<T> iterator(){
+        return new ArrayDequeIterator();
+    }
+    public boolean equals(Object o){
+        if(o instanceof Deque){
+            int s = size;
+            for(int i = 0; i<s; i++){
+                if(!(get(i).equals(((Deque<?>) o).get(i)))){
+                    return false;
+                }
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 
