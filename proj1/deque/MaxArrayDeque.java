@@ -10,17 +10,17 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
             return s1 - s2;
         }
     }
-    public class StringComparator implements Comparator<String>{
+    private class StringComparator implements Comparator<String>{
         public int compare(String s1, String s2){
             return s1.compareTo(s2);
         }
     }
-    public class FloatComparator implements Comparator<Float>{
+    private class FloatComparator implements Comparator<Float>{
         public int compare(Float f1, Float f2){
             return (int)(f1- f2);
         }
     }
-    public MaxArrayDeque(Comparator<T> c) {
+    MaxArrayDeque(Comparator<T> c) {
         super();
         comparator = c;
     }
@@ -39,7 +39,7 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         return maximum;
     }
 
-    public T max(Comparator c) {
+    public T max(java.util.Comparator<T> c) {
         if (isEmpty()) {
             return null;
         }

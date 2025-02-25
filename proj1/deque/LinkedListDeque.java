@@ -88,14 +88,33 @@ public class LinkedListDeque<T> implements Deque<T>{
             p = p.next;
         }
     }
+
     public T get(int index){
-        TNode current = sentinel.next;//此行显示current never used
+        TNode current = sentinel.next;
         for (int i = 0; i < index; i++) {
-            current = current.next;//此行无法识别current
+            current = current.next;
         }
         return current.item;
     }
-    public class LinkedListDequeIterator implements Iterator{
+    public T getRecursive(int index) {
+        return getRecursiveHelper(index, sentinel.next);  // 从 sentinel.next 开始
+    }
+
+    private T getRecursiveHelper(int index, TNode current) {
+        // 如果当前节点为空，说明 index 超出了链表范围
+        if (current == null) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+
+        // 如果已经到达目标节点，返回该节点的 item
+        if (index == 0) {
+            return current.item;
+        } else {
+            // 递归调用，向下一个节点查找
+            return getRecursiveHelper(index - 1, current.next);
+        }
+    }
+    private class LinkedListDequeIterator implements Iterator{
         private int index = 0;
         @Override
         public T next(){
