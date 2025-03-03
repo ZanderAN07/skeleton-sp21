@@ -1,7 +1,7 @@
 package deque;
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int first; //（数组的第一个数字的index）
