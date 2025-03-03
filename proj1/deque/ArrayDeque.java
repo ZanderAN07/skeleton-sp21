@@ -78,7 +78,7 @@ public class ArrayDeque<T> implements Deque<T> {
         System.out.println();
     }
 
-    private class ArrayDequeIterator implements Iterator {
+    private class ArrayDequeIterator implements Iterator<T> {
         private int index = 0;
 
         @Override
@@ -88,7 +88,7 @@ public class ArrayDeque<T> implements Deque<T> {
 
         @Override
         public T next() {
-            return get(index);
+            return get(index++);
         }
     }
 
@@ -99,6 +99,9 @@ public class ArrayDeque<T> implements Deque<T> {
     public boolean equals(Object o) {
         if (o instanceof Deque) {
             int s = size;
+            if(s != ((Deque<?>) o).size()){
+                return false;
+            }
             for (int i = 0; i < s; i++) {
                 if (!(get(i).equals(((Deque<?>) o).get(i)))) {
                     return false;

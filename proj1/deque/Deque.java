@@ -1,8 +1,8 @@
 package deque;
 
 public interface Deque<T> {
-    default boolean isEmpty(){
-        return this.size()== 0;
+    default boolean isEmpty() {
+        return this.size() == 0;
     }
     void addFirst(T item);
     void addLast(T item);

@@ -1,6 +1,6 @@
 package deque;
 
-public interface Iterable<T>{
+public interface Iterable<T> {
     boolean hasNext();
     T next();
 }
