@@ -99,7 +99,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public boolean equals(Object o) {
         if (o instanceof Deque) {
             int s = size;
-            if(s != ((Deque<?>) o).size()){
+            if (s != ((Deque<?>) o).size()) {
                 return false;
             }
             for (int i = 0; i < s; i++) {

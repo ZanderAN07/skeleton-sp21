@@ -4,13 +4,13 @@ import edu.princeton.cs.algs4.StdDraw;
 
 public class GuitarHero {
     public static void main(String[] args) {
-        GuitarString[] GuitarConcert = new GuitarString[37];
-        Double InitialConcert = 440.0;
-        GuitarConcert[1] = new GuitarString(InitialConcert);
+        GuitarString[] guitarConcert = new GuitarString[37]; // Renamed to camelCase
+        Double initialConcert = 440.0; // Renamed to camelCase
+        guitarConcert[1] = new GuitarString(initialConcert);
         for (int a = 1; a < 37; a++) {
-            Double newConcert = InitialConcert * Math.pow(2, 3.0 / 12.0);
-            InitialConcert = newConcert;
-            GuitarConcert[a] = new GuitarString(newConcert);
+            Double newConcert = initialConcert * Math.pow(2, 3.0 / 12.0);
+            initialConcert = newConcert;
+            guitarConcert[a] = new GuitarString(newConcert);
         }
         while (true) {
             if (StdDraw.hasNextKeyTyped()) {
@@ -20,7 +20,7 @@ public class GuitarHero {
                 if (index == -1) {
                     System.out.println("Unexpected Token");
                 }
-                GuitarConcert[index].pluck();
+                guitarConcert[index].pluck();
             }
         }
     }
