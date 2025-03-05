@@ -22,10 +22,15 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public void addFirst(T adder) {
         size += 1;
         if (sentinel == null) {
+            // 当链表为空时
             sentinel = new TNode(adder, null, null);
             last = sentinel;
+        } else {
+            // 当链表不为空时
+            TNode newNode = new TNode(adder, sentinel, null);
+            sentinel.prev = newNode;  // sentinel 的 prev 指向新节点
+            sentinel = newNode;       // sentinel 更新为新节点
         }
-        sentinel = new TNode(adder, sentinel, null);
     }
 
     public void addLast(T adder) {
@@ -51,15 +56,13 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         size -= 1;
         T r = sentinel.item;
         TNode n = sentinel.next;
-        if (n == null || n == last) {
+        if (n == null) {
             sentinel = null;
             last = null;
             return r;
         }
-        sentinel.item = n.item;
-        sentinel.next = n.next;
-        sentinel.prev = null;
-
+        sentinel = n;  // 将 sentinel 移动到下一个节点
+        sentinel.prev = null;  // 更新新的头节点的 prev 指针
         return r;
     }
 
