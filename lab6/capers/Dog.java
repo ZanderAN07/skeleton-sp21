@@ -7,10 +7,10 @@ import static capers.Utils.*;
 /** Represents a dog that can be serialized.
  * @author TODO
 */
-public class Dog { // TODO
+public class Dog implements Serializable { // TODO
 
     /** Folder that dogs live in. */
-    static final File DOG_FOLDER = null; // TODO (hint: look at the `join`
+    static final File DOG_FOLDER = join(".capers", "dogs"); // TODO (hint: look at the `join`
                                          //      function in Utils)
 
     /** Age of dog. */
@@ -38,9 +38,11 @@ public class Dog { // TODO
      * @param name Name of dog to load
      * @return Dog read from file
      */
+    //解码一只小狗，根据名字进行search
     public static Dog fromFile(String name) {
         // TODO (hint: look at the Utils file)
-        return null;
+        File n = join(DOG_FOLDER, name);
+        return Utils.readObject(n,Dog.class);
     }
 
     /**
@@ -57,6 +59,8 @@ public class Dog { // TODO
      */
     public void saveDog() {
         // TODO (hint: don't forget dog names are unique)
+        File f = join(DOG_FOLDER, this.name);
+        Utils.writeObject(f,this);
     }
 
     @Override

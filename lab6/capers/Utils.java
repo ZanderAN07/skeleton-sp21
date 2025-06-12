@@ -22,13 +22,14 @@ import java.util.List;
 /** Assorted utilities.
  *  @author P. N. Hilfinger
  */
-class Utils {
+public class Utils {
 
     /* READING AND WRITING FILE CONTENTS */
 
     /** Return the entire contents of FILE as a byte array.  FILE must
      *  be a normal file.  Throws IllegalArgumentException
      *  in case of problems. */
+    //可能有帮助，将整个文件转化为这个之后，再使用别的方法一个个读取对象
     static byte[] readContents(File file) {
         if (!file.isFile()) {
             throw new IllegalArgumentException("must be a normal file");
@@ -51,7 +52,7 @@ class Utils {
      *  creating or overwriting it as needed.  Each object in CONTENTS may be
      *  either a String or a byte array.  Throws IllegalArgumentException
      *  in case of problems. */
-    static void writeContents(File file, Object... contents) {
+    public static void writeContents(File file, Object... contents) {
         try {
             if (file.isDirectory()) {
                 throw
@@ -89,6 +90,7 @@ class Utils {
     }
 
     /** Write OBJ to FILE. */
+    //
     static void writeObject(File file, Serializable obj) {
         writeContents(file, serialize(obj));
     }
@@ -114,6 +116,7 @@ class Utils {
     /* SERIALIZATION UTILITIES */
 
     /** Returns a byte array containing the serialized contents of OBJ. */
+    //序列化一个狗
     static byte[] serialize(Serializable obj) {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
