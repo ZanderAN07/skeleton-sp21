@@ -138,6 +138,13 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for(int a = 0; a < b.size(); a++){
+            for(int s = 0; s < b.size(); s++){
+                if(b.tile(a,s) == null){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +155,14 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for(int a = 0; a < b.size(); a++){
+            for(int s = 0; s < b.size(); s++){
+                Tile t = b.tile(a,s);
+                if(t != null && t.value() == MAX_PIECE){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +174,42 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if(emptySpaceExists(b)){
+            return true;
+        }
+        else{
+            for(int a = 0; a < b.size(); a ++){
+                //忽略了对角线
+                //TODO: 检测边界值，在边框时不对比
+                for(int s = 0; s < b.size(); s ++){
+                    Tile me = b.tile(a,s);
+                    if(a != 0){
+                        Tile up = b.tile(a-1, s);
+                        if(me.value() == up.value()){
+                            return true;
+                        }
+                    }
+                    if(a != b.size()){
+                        Tile down = b.tile(a + 1,s);
+                        if(me.value() == down.value()){
+                            return true;
+                        }
+                    }
+                    if(s != 0){
+                        Tile left = b.tile(a, s - 1);
+                        if(me.value() == left.value()){
+                            return true;
+                        }
+                    }
+                    if(s != b.size()) {
+                        Tile right = b.tile(a, s + 1);
+                        if(me.value() == right.value()){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
