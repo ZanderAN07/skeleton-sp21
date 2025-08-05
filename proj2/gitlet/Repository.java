@@ -138,7 +138,7 @@ public class Repository {
     public void checkoutCommit(String commitID){ //理论上来说永不出错
         //reset CWD to a certain Snapshot.
         Commit c = Utils.readObject(FileFinder(COMMITS, commitID),Commit.class);
-        File ReplacedCWD = new File();
+        //File ReplacedCWD = new File();
         //iterate a tree and rebuild every file
     }
     private File BuildFile(Commit.TreeNode Snapshot){
