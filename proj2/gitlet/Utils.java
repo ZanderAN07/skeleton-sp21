@@ -110,11 +110,11 @@ class Utils {
     static String readContentsAsString(File file) {
         return new String(readContents(file), StandardCharsets.UTF_8);
     }
-
     /** Write the result of concatenating the bytes in CONTENTS to FILE,
      *  creating or overwriting it as needed.  Each object in CONTENTS may be
      *  either a String or a byte array.  Throws IllegalArgumentException
      *  in case of problems. */
+    //简而言之就是把任何东西转换成byte，再在给定的文档里写入这些byte
     static void writeContents(File file, Object... contents) {
         try {
             if (file.isDirectory()) {
