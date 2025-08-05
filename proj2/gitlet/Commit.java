@@ -68,7 +68,8 @@ public class Commit implements Serializable {
     }
 
     public TreeNode TreeBuilderHelper(File f) {//此方法用于递归的创建一个以文件夹关系为导向的tree
-        TreeNode n = new TreeNode(f.getName(), Utils.sha1(f));
+        String s = Utils.sha1(Utils.readContents(f));
+        TreeNode n = new TreeNode(f.getName(), s);
         if (f.isDirectory()) {
             File[] Children = f.listFiles();
             if (Children != null) {
