@@ -54,6 +54,7 @@ public class Repository {
     public void init(){
         if(GITLET_DIR.exists()){
             System.err.println("A Gitlet version-control system already exists in the current directory.");
+            return;
         }
         initializedFile(GITLET_DIR,BRANCHES,BLOBS,COMMITS);
         File DefaultBranch = Utils.join(BRANCHES, "master");
@@ -63,7 +64,8 @@ public class Repository {
         Commit initialCommit = new Commit();
         File initialCommitFile = Utils.join(COMMITS, "InitialCommit");
         Utils.writeObject(initialCommitFile, initialCommit);
-        Utils.writeObject(HEAD, initialCommit);
+        File headFile = Utils.join(GITLET_DIR, "HEAD");
+        Utils.writeContents(headFile, "InitialCommit"); // 写入 commit 的文件名
     }
 
     public void makeNewCommit(String message){
@@ -82,14 +84,14 @@ public class Repository {
         //把file f的hash加入staging area,文档内容写入blob。staging area是hash map，对应hash值和文档名
         //这个文件的名字是SHA-1CODE形式
         //在staging area里干了这些：学习对应关系 - -- - - - -hello.txt -> blob 3a45b...
-        String hash = Utils.sha1(f);
+        String hash = Utils.sha1(Utils.readContents(f));
         if(stagedForRemove.containsKey(hash)){
             stagedForRemove.remove(hash);
         }
         else {
             File adder = Utils.join(BLOBS, hash);
             //暂定；blob直接存储代码块（也就是数据/file的结构）和hash（作为名字），也就是名字叫sha-1code的代码块钱
-            Utils.writeContents(adder, f);
+            Utils.writeContents(adder, Utils.readContents(f));
             //staging area的数据结构是hash map，也就是对应关系-文档名对应hash code。
             stagedForAdd.put(f.getName(), hash);
         }

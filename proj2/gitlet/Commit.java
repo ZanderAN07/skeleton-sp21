@@ -95,7 +95,7 @@ public class Commit implements Serializable {
     }
 
 
-    public class TreeNode {
+    public class TreeNode implements Serializable {
         private final String name;
         private final String sha1;
         private List<TreeNode> ChildList;
