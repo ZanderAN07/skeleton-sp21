@@ -2,9 +2,11 @@ package gitlet;
 
 // TODO: any imports you need here
 
+import javax.swing.tree.TreeNode;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date; // TODO: You'll likely use this in this class
 import java.util.List;
 
@@ -68,23 +70,41 @@ public class Commit implements Serializable {
     }
 
     public TreeNode TreeBuilderHelper(File f) {//此方法用于递归的创建一个以文件夹关系为导向的tree
-        String s = Utils.sha1(Utils.readContents(f));
-        TreeNode n = new TreeNode(f.getName(), s);
         if (f.isDirectory()) {
-            File[] Children = f.listFiles();
-            if (Children != null) {
-                for (File files : Children) {
-                    n.addChild(TreeBuilderHelper(files));//递归 直到添加全部files;
+            File[] files = f.listFiles();
+            ArrayList<TreeNode> children = new ArrayList<>();
+
+            if (files != null) {
+                Arrays.sort(files); // 保证遍历顺序一致
+                for (File child : files) {
+                    TreeNode childNode = TreeBuilderHelper(child);
+                    if (childNode != null) {
+                        children.add(childNode);
+                    }
                 }
             }
+
+            // 注意这里：目录节点没有 hash，只用名字和子节点
+            return new TreeNode(f.getName(), null, children);
+
+        } else {
+            // 是文件时，构造 hash，子节点为 null 或空列表
+            String hash = Utils.sha1(Utils.readContents(f));
+            return new TreeNode(f.getName(), hash, new ArrayList<>());
         }
-        return n;
     }
+
 
     public class TreeNode {
         private final String name;
         private final String sha1;
         private List<TreeNode> ChildList;
+
+        private TreeNode(String n, String s, List<TreeNode> children) {
+            name = n;
+            sha1 = s;
+            ChildList = children;
+        }
 
         private TreeNode(String n, String s) {
             name = n;
