@@ -37,7 +37,9 @@ public class Repository {
 
     public Map<String, String> stagedForRemove = new HashMap<>();
 
-    public static File HEAD;
+    public static String HEAD;
+
+    public static String currentCommit;
 
     public static File BRANCHES = join(GITLET_DIR, ".branches");
 
@@ -57,15 +59,19 @@ public class Repository {
             return;
         }
         initializedFile(GITLET_DIR,BRANCHES,BLOBS,COMMITS);
+
+        //create master branch
         File DefaultBranch = Utils.join(BRANCHES, "master");
         DefaultBranch.mkdir();
-        HEAD = DefaultBranch;
-        //create master branch
+
+
         Commit initialCommit = new Commit();
-        File initialCommitFile = Utils.join(COMMITS, "InitialCommit");
+        String initialCommitHash = Utils.sha1(initialCommit);
+        File initialCommitFile = Utils.join(COMMITS, initialCommitHash);
         Utils.writeObject(initialCommitFile, initialCommit);
-        File headFile = Utils.join(GITLET_DIR, "HEAD");
-        Utils.writeContents(headFile, "InitialCommit"); // 写入 commit 的文件名
+        HEAD = "master";
+        File masterBranchFile = Utils.join(BRANCHES, "master");
+        Utils.writeContents(masterBranchFile, initialCommitHash);// 写入 commit 的文件名
     }
 
     public void makeNewCommit(String message){
@@ -76,8 +82,9 @@ public class Repository {
     }
 
     public void makeNewBranch(String name){
-        File NewBranch = Utils.join(BRANCHES, name);
-        HEAD = NewBranch;
+        //是否改变HEAD？待解决
+        File newBranchFile = Utils.join(BRANCHES, name);
+        Utils.writeContents(newBranchFile, currentCommit);
     }
 
     public void add(File f){
@@ -139,10 +146,17 @@ public class Repository {
 
     public void checkoutCommit(String commitID){ //理论上来说永不出错
         //reset CWD to a certain Snapshot.
-        Commit c = Utils.readObject(FileFinder(COMMITS, commitID),Commit.class);
+        Commit targetCommit = Utils.readObject(FileFinder(COMMITS, commitID),Commit.class);
         //File ReplacedCWD = new File();
         //iterate a tree and rebuild every file
+        restoreWorkingDirectory(targetCommit);
     }
+
+    private void restoreWorkingDirectory(Commit targetCommit){
+        iterate(targetCommit.getSnapShot(), CWD);
+        currentCommit = commitID;
+    }
+
     private File BuildFile(Commit.TreeNode Snapshot){
         String name = Snapshot.getName();
         String sha1 = Snapshot.getSha1();

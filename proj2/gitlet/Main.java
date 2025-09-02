@@ -36,6 +36,7 @@ public class Main {
                 repo.checkInital();
                 //check num args?
                 repo.remove(FileFinder(Repository.CWD, args[1]));//TODO:Search that file in CWD
+                break;
             case "branch":
                 repo.checkInital();
                 //check num args?

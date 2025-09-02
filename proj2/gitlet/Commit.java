@@ -52,6 +52,7 @@ public class Commit implements Serializable {
         message = m;
         parent = Utils.sha1(p);
         //复制parent的Snap Shot
+        SnapShot = TreeBuilderHelper(CWD);
         TreeNode t = p.SnapShot.DeepCopy(p.SnapShot); //太怪了这代码逻辑有点恶心
         timestamp = new Date();
         //在commit文件夹里面寻找parent序列化后的文件（关于文件search，是否需要重写方法？）
@@ -68,6 +69,10 @@ public class Commit implements Serializable {
     public static Date GetTime(Commit c){
         return c.timestamp;
     }
+
+    public TreeNode GetSnapShot(){
+        return SnapShot;
+    }   
 
     public TreeNode TreeBuilderHelper(File f) {//此方法用于递归的创建一个以文件夹关系为导向的tree
         if (f.isDirectory()) {
