@@ -182,7 +182,7 @@ public class Repository implements Serializable {
     }
 
     public void  merge(){
-        for 
+        // TODO: Implement merge after the core checkout/reset workflow works.
     }
 
     public void checkInitial() {
