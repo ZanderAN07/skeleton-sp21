@@ -41,6 +41,10 @@ public class Commit implements Serializable {
         return parent2_id;
     }
 
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
     public TreeMap<String, String> getSnapshot(){
         return snapshot;
     }

@@ -2,9 +2,8 @@ package gitlet;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static gitlet.Utils.*;
 
@@ -167,6 +166,8 @@ public class Repository implements Serializable {
 
     public void printAllCommit(){
         String currentCommitId = branches.get(HEAD);
+        SimpleDateFormat formatter =
+                new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z", Locale.US);
 
         while (currentCommitId != null) {
             File currentCommitFile = Utils.join(COMMITS, currentCommitId);
@@ -174,6 +175,7 @@ public class Repository implements Serializable {
 
             System.out.println("===");
             System.out.println("commit " + currentCommitId);
+            System.out.println("Date: " + formatter.format(c.getTimestamp()));
             System.out.println(c.getMessage());
             System.out.println();
 
@@ -183,6 +185,16 @@ public class Repository implements Serializable {
 
     public void  merge(){
         // TODO: Implement merge after the core checkout/reset workflow works.
+        //把给定 branch 合并进当前 branch。首先要找 split point：也就是当前 branch head 和 given branch head 的 latest common ancestor。
+        // common ancestor 是两个 head 都能沿 parent 指针到达的 commit；latest common ancestor 是不作为另一个 common ancestor 祖先的那个共同祖先
+        ArrayList<String> queue = new ArrayList<>();
+        String currentCommitId = branches.get(HEAD);
+        while (currentCommitId != null) {
+            File currentCommitFile = Utils.join(COMMITS, currentCommitId);
+            Commit c = Utils.readObject(currentCommitFile, Commit.class);
+
+            currentCommitId = c.getParent1_id();
+        }
     }
 
     public void checkInitial() {
