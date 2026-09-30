@@ -113,22 +113,51 @@ public class Repository implements Serializable {
     }
 
     public void add(File f){
-        String id = Utils.sha1(Utils.readContents(f));
+        if (!f.isFile()) {
+            Utils.message("File does not exist.");
+            return;
+        }
+        String fileName = f.getName();
+        byte[] contents = Utils.readContents(f);
+        String id = Utils.sha1(contents);
+        String headCommitId = branches.get(HEAD);
+        Commit headCommit = Utils.readObject(Utils.join(COMMITS, headCommitId), Commit.class);
+        String trackedBlobId = headCommit.getSnapshot().get(fileName);
+        if (id.equals(trackedBlobId)) {
+            stagedForAdd.remove(fileName);
+            stagedForRemove.remove(fileName);
+            save();
+            return;
+        }
         // Adding a file cancels a pending removal for that same file name.
-        stagedForRemove.remove(f.getName());
+        stagedForRemove.remove(fileName);
         File adder = Utils.join(BLOBS, id);
-        Utils.writeContents(adder, Utils.readContents(f));
-        stagedForAdd.put(f.getName(), id);
+        Utils.writeContents(adder, contents);
+        stagedForAdd.put(fileName, id);
         save();
     }
 
     public void remove(File f){
         String fileName = f.getName();
+        String headCommitId = branches.get(HEAD);
+        Commit headCommit = Utils.readObject(Utils.join(COMMITS, headCommitId), Commit.class);
+        boolean changed = false;
         if (stagedForAdd.containsKey(fileName)) {
             // stagedForAdd is keyed by file name, not by blob id.
             stagedForAdd.remove(fileName);
-        } else {
+            changed = true;
+        }
+        if (headCommit.getSnapshot().containsKey(fileName)) {
             stagedForRemove.add(fileName);
+            File workingFile = Utils.join(CWD, fileName);
+            if (workingFile.exists()) {
+                Utils.restrictedDelete(workingFile);
+            }
+            changed = true;
+        }
+        if (!changed) {
+            Utils.message("No reason to remove the file.");
+            return;
         }
         save();
     }

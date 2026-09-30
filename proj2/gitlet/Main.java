@@ -45,7 +45,7 @@ public class Main {
                     repo.recoverHead(args[2]);
                 } else if (args.length == 4 && args[2].equals("--")) {
                     // checkout commitId -- file
-                    repo.recoverCommit(args[1],args[2]);
+                    repo.recoverCommit(args[1],args[3]);
                 } else if (args.length == 2) {
                     // checkout branch
                     repo.makeNewBranch(args[1]);
